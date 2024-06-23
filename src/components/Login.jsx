@@ -16,6 +16,7 @@ import Error from "./Error";
 import useFetch from "./hooks/useFetch";
 import { login } from "@/db/apiAuth";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { UrlState } from "./Context";
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState([]);
@@ -33,9 +34,12 @@ const Login = () => {
   };
 
   const { data, error, loading, fn: fnLogin } = useFetch(login, formData);
+  const {fetchUser} = UrlState();
   useEffect(() => {
     if (error === null && data) {
       navigate(`/dashboard?${longLink ? `createNew=${longLink}`: ""}`);
+      fetchUser();
+
     }
     console.log(data);
   }, [data, error]);
