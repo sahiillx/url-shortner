@@ -9,6 +9,7 @@ import useFetch from "@/components/hooks/useFetch";
 import { getClicksForUrls } from "@/db/apiClicks";
 import { UrlState } from "@/components/Context";
 import { getUrls } from "@/db/apiUrls";
+import LinkCard from "@/components/LinkCard";
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -73,7 +74,7 @@ const Dashboard = () => {
       </div>
       {error && <Error message={error?.message} />}
       {(filteredUrls || []).map((url, i) => {
-        return url.title;
+        return <LinkCard key={i} url={url} fetchUrls={fnUrls} />;
       })}
     </div>
   );
